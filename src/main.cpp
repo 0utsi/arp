@@ -37,21 +37,32 @@ int main() {
   ec.overlap_ms = 12;
   eng.set_engine_config(ec);
 
-  // Pattern 0 przez builder
-  auto& p0 = eng.pattern(0);
-  p0.channel  = 1;
-  p0.division = 2; // ósemki
-  core::PatternBuilder b0(p0);
-  b0.clear()
-    .indices({1,3,2})
-    .each().gate(70).vel(100).oct(0).prob(100).on().done();
+  // Pattern 0: [1,3,2], ósemki, delikatnie dłuższy gate
+auto& p0 = eng.pattern(0);
+p0.channel  = 1;
+p0.division = 2;
+core::PatternBuilder b0(p0);
+b0.clear()
+  .indices({1,3,2})
+  .each().gate(70).vel(100).oct(0).prob(100).on().done();
 
-  // Opcjonalnie pattern 1
-  auto& p1 = eng.pattern(1);
-  p1.channel  = 2;
-  p1.division = 4; // szesnastki
-  core::PatternBuilder b1(p1);
-  b1.clear().indices({1,2,3}).each().gate(50).vel(90).oct(+1).on().done();
+// Pattern 1: trzy kroki na +1 oktawie, szesnastki
+auto& p1 = eng.pattern(1);
+p1.channel  = 2;
+p1.division = 4;
+core::PatternBuilder b1(p1);
+b1.clear()
+  .indices({1,2,3})
+  .each().gate(50).vel(90).oct(+1).on().done();
+
+// Pattern 2: REST w środku, akcent na koniec
+auto& p2 = eng.pattern(2);
+p2.channel = 1;
+p2.division= 2;
+core::PatternBuilder b2(p2);
+b2.clear()
+  .indices({1,0,2,3})                 // 0 = REST
+  .step().idx(3).vel(120).gate(80);   // dopracuj ostatni krok
 
   // CLI
   ui::CommandQueue cq;

@@ -38,8 +38,7 @@
 *.app
 
 # debug information files
-<<<<<<< HEAD
 *.dwo
-=======
-*.dwo
->>>>>>> 78f82ea7a94f3dd76f4f83435bdd3d17ba2ef077
+
+
+build
