@@ -72,8 +72,9 @@ public:
   void send(const ports::MidiMsg& m) override {
     std::vector<unsigned char> v{ m.status, m.data1, m.data2 };
     out_->sendMessage(&v);             // lub: unsigned char b[3]{...}; out_->sendMessage(b,3);
+    const uint8_t channel = (m.status & 0x0F) + 1;  // Extract channel (1-16)
     std::cout << ( (m.status & 0xF0) == 0x90 ? "[OUT ON ] " : "[OUT OFF] " )
-          << "note=" << (int)m.data1 << " t=" << m.t_ms << "\n";
+          << "ch=" << (int)channel << " note=" << (int)m.data1 << " vel=" << (int)m.data2 << " t=" << m.t_ms << "\n";
 
   }
 private:

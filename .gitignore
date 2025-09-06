@@ -37,6 +37,9 @@
 *.out
 *.app
 
+# build directory
+build
+
 # debug information files
 <<<<<<< HEAD
 *.dwo
